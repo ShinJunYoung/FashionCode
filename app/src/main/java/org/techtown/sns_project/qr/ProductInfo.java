@@ -1,18 +1,24 @@
 package org.techtown.sns_project.qr;
 
-public class ProductInfo {
+import java.io.Serializable;
+
+public class ProductInfo implements Serializable {
     String URL;
     String ImgURL;
     String Title;
     String Info;
     String Price;
+    int Count;
 
-    public ProductInfo(String URL, String imgurl, String title, String info, String price) {
+    public ProductInfo(String URL, String ImgURL, String title, String info, String price) {
         this.URL = URL;
-        ImgURL = imgurl;
+        this.ImgURL = ImgURL;
         Title = title;
         Info = info;
-        Price = price;
+        this.Price = price;
+    }
+
+    public ProductInfo() {
     }
 
     public String getURL() {
@@ -27,8 +33,8 @@ public class ProductInfo {
         return ImgURL;
     }
 
-    public void setImgURL(String imgurl) {
-        ImgURL = imgurl;
+    public void setImgURL(String ImgURL) {
+        this.ImgURL = ImgURL;
     }
 
     public String getTitle() {

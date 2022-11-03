@@ -2,40 +2,68 @@ package org.techtown.sns_project.Enterprise;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.techtown.sns_project.CommonSignInActivity;
-import org.techtown.sns_project.Enterprise.Setting.EnterpriseSettingActivity;
+import org.techtown.sns_project.Enterprise.QR.EnterpriseQRActivity;
+import org.techtown.sns_project.Enterprise.QR.EnterpriseQRListActivity;
 import org.techtown.sns_project.R;
 import org.techtown.sns_project.SignInActivity;
-import org.techtown.sns_project.SignUpActivity;
+import info.hoang8f.widget.FButton;
 
 public class EnterpriseMainActivity extends AppCompatActivity {
     private final String TAG = "MainActivityDB";
+    private long backKeyPressedTime = 0;
+    private Toast terminate_guide_msg;
+    //
+    private FButton EnterpsireQRButton;
+    private FButton EnterpriseQRListButton;
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enterprise_main);
-        findViewById(R.id.EnterpsireQRButton).setOnClickListener(onClickListener);
-        findViewById(R.id.EnterpriseQRListButton).setOnClickListener(onClickListener);
+        ActionBar ac = getSupportActionBar();
+        getSupportActionBar().setIcon(R.drawable.onandofflogo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        EnterpsireQRButton = (FButton) findViewById(R.id.EnterpsireQRButton);
+        EnterpsireQRButton.setButtonColor(getResources().getColor(R.color.buttonColor2));
+        EnterpsireQRButton.setShadowEnabled(true);
+        EnterpsireQRButton.setShadowHeight(20);
+        EnterpsireQRButton.setCornerRadius(50);
+
+        EnterpriseQRListButton = (FButton) findViewById(R.id.EnterpriseQRListButton);
+        EnterpriseQRListButton.setButtonColor(getResources().getColor(R.color.buttonColor2));
+        EnterpriseQRListButton.setShadowEnabled(true);
+        EnterpriseQRListButton.setShadowHeight(20);
+        EnterpriseQRListButton.setCornerRadius(50);
+//
+
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        EnterpsireQRButton.setOnClickListener(onClickListener);
+        EnterpriseQRListButton.setOnClickListener(onClickListener);
+
+
         // manifest에서 첫 화면은 MainActivity로 설정되어있는데,
         // 로그인이 되지 않은 상태면 로그인창을 띄워야 한다.
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null) {
-            StartActivity(SignInActivity.class);
+            StartActivity(CommonSignInActivity.class);
         }
     }
 
@@ -49,15 +77,10 @@ public class EnterpriseMainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case  R.id.SettingMenu:
-                StartActivity(EnterpriseSettingActivity.class);
-                break;
-            case R.id.LogoutMenu:
-                FirebaseAuth.getInstance().signOut();
-                StartActivity(CommonSignInActivity.class);
-                finish();
-                break;
+        if (item.getItemId() == R.id.LogoutMenu) {
+            FirebaseAuth.getInstance().signOut();
+            StartActivity(CommonSignInActivity.class);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -81,4 +104,23 @@ public class EnterpriseMainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+
+        if (System.currentTimeMillis() > backKeyPressedTime + 1000) {
+            backKeyPressedTime = System.currentTimeMillis();
+            terminate_guide_msg = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+            terminate_guide_msg.show();
+            return;
+        }
+
+        if (System.currentTimeMillis() <= backKeyPressedTime + 1000) {
+            terminate_guide_msg.cancel();
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
+
+    }
 }

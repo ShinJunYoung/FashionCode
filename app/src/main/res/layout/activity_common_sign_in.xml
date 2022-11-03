@@ -4,61 +4,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:elevation="10dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/CommonSignInText"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center"
-        android:text="회원 로그인"
-        android:textColor="#000000"
-        android:textSize="24sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingBottom="5dp">
 
-        <EditText
-            android:id="@+id/EmailEditText"
+        <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="match_parent"
+            android:layout_height="212dp"
+            app:srcCompat="@drawable/onandofflogo" />
+
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:hint="이메일"
-            android:drawableLeft="@drawable/ic_baseline_assignment_ind_24"
-            android:inputType="textEmailAddress" />
+            app:mtf_image="@drawable/ic_baseline_perm_identity_24"
+            app:mtf_labelColor="@color/black">
 
-        <EditText
-            android:id="@+id/PasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:hint="비밀번호"
-            android:drawableLeft="@drawable/ic_baseline_lock_24"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/EmailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:hint="이메일     Ex) onoff@onoff.co.kr"
+                android:inputType="textEmailAddress" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
 
-        <Button
-            android:id="@+id/SignInButton"
-            android:layout_width="match_parent"
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="로그인" />
+            app:mtf_image="@drawable/ic_baseline_lock_24"
+            app:mtf_labelColor="@color/black">
+
+            <EditText
+                android:id="@+id/PasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:hint="비밀번호"
+                android:inputType="textPassword" />
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+    </LinearLayout>
+
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:id="@+id/SignInButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:ellipsize="middle"
+        android:text="Login"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
 
         <Button
             android:id="@+id/CommonSignUpButton"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="회원가입" />
+            android:layout_weight="1"
+            android:background="#00ff0000"
+            android:backgroundTint="@color/white"
+            android:text="회원가입"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/FindPassWord"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="비밀번호 찾기" />
+            android:layout_weight="1"
+            android:background="#00ff0000"
+            android:backgroundTint="@color/white"
+            android:text="비밀번호 찾기"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
 
     </LinearLayout>
+
 
 </LinearLayout>
